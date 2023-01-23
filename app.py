@@ -15,6 +15,8 @@ if isExist == False:
     db.execute(
         "CREATE TABLE events (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, event TEXT, date DATETIME, game TEXT)"
     )
+else:
+    db = SQL("sqlite:///database.db")
 
 
 @app.route("/", methods=["GET", "POST"])
