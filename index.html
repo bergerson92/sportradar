@@ -1,0 +1,131 @@
+<head>
+    <style>
+        .button {
+            background-color: #A19EF5;
+            border-radius: 12px;
+            margin: 5px;
+        }
+
+        .button:hover {
+            background-color: #9EF5CD
+        }
+
+        .button:active {
+            background-color: #9EF5CD;
+            transform: translateY(4px);
+        }
+    </style>
+</head>
+<h2>Sports Event calendar</h2>
+<p>Type in your sports event here and click submit</p>
+
+<form action="/" method="post">
+    <div>
+        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="date" placeholder="When?"
+            type="datetime-local">
+        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="event" placeholder="Event"
+            type="text">
+        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="game" placeholder="Game"
+            type="text">
+    </div>
+    <button type="submit">Submit</button>
+</form>
+
+<p>Click the button to sort the table by date:</p>
+<p><button onclick="sortTable()">Old to New</button></p>
+
+<p>Show the sport events by categorization</p>
+
+<select id="eventsDropdown" oninput="filterTable()">
+    <option>All</option>
+    {% for row in categories %}
+    <option>{{ row["event"] }}</option>
+    {% endfor %}
+</select>
+
+<p>Search games by team name</p>
+
+<input type="text" id="eventInput" onkeyup="categorize_by_event()" placeholder="Search a team.."
+    title="Type in your team">
+
+
+<table id="eventTable">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Event</th>
+            <th>Game</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in events %}
+        <tr>
+            <td>{{ row["date"] }}</td>
+            <td>{{ row["event"] }}</td>
+            <td>{{ row["game"] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script>
+    function sortTable() {
+        var table, rows, switching, i, x, y, shouldSwitch;
+        table = document.getElementById("eventTable");
+        switching = true;
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("TD")[0];
+                y = rows[i + 1].getElementsByTagName("TD")[0];
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+            }
+        }
+    }
+    function filterTable() {
+        // Variables
+        let dropdown, table, rows, cells, event, filter;
+        dropdown = document.getElementById("eventsDropdown");
+        table = document.getElementById("eventTable");
+        rows = table.getElementsByTagName("tr");
+        filter = dropdown.value;
+
+        for (let row of rows) {
+            cells = row.getElementsByTagName("td");
+            event = cells[1] || null;
+            if (filter === "All" || !event || (filter === event.textContent)) {
+                row.style.display = "";
+            }
+            else {
+                row.style.display = "none";
+            }
+        }
+    }
+    function categorize_by_event() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("eventInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("eventTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[2];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
