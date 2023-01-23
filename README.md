@@ -6,4 +6,6 @@
 3. Show sport events by categorization
 4. Search games by team name.
 
+Here you can see how the website looks in action:
+
 ![Screenshot](sportradar.png)
