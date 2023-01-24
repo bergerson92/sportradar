@@ -14,4 +14,4 @@ Here is a simple ERD an a more sophisticated for better performance:
 For the sake of simplicity I set up only 1 table for this exercise.
 
 ![Screenshot](ERD_sportradar.png)
-![Screenshot](ERD_more.png)
+![Screenshot](ERD.png)
