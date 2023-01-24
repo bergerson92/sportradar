@@ -9,3 +9,8 @@
 Here you can see how the website looks in action:
 
 ![Screenshot](sportradar.png)
+
+Here is the ideal ERD:
+For the sake of simplicity I set up only 1 table for this exercise.
+
+![Screenshot](ERD.png)
